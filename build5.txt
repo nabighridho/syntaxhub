@@ -1,0 +1,94 @@
+﻿[36mvite v7.3.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32mÔ£ô[39m 2064 modules transformed.
+npx : [31mÔ£ù[39m Build 
+failed in 8.31s
+At line:1 char:1
++ npx vite build 2>&1 | Ou
+t-File -FilePath e:\PSBI\w
+eb-learning-hub\bui ...
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (  
+  [31mÔ£ù[39m Build fa   
+ iled in 8.31s:String)    
+ [], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+[31merror during build:
+[31mresources/js/Pages/Sn
+ippets/Show.jsx (4:9): "Hi
+OutlineDocumentCopy" is no
+t exported by "node_module
+s/react-icons/hi/index.mjs
+", imported by "resources/
+js/Pages/Snippets/Show.jsx
+".[31m
+file: [36mE:/PSBI/web-lea
+rning-hub/resources/js/Pag
+es/Snippets/Show.jsx:4:9[
+31m
+[33m
+2: import { Head, Link } f
+rom '@inertiajs/react';
+3: import { motion } from 
+'framer-motion';
+4: import { HiOutlineDocum
+entCopy, HiOutlineCheck, H
+iOutlineArrowLeft } from '
+react-icons/hi';
+            ^
+5: import { useState } fro
+m 'react';
+[31m
+    at getRollupError (fil
+e:///E:/PSBI/web-learning-
+hub/node_modules/rollup/di
+st/es/shared/parseAst.js:4
+06:41)
+    at error (file:///E:/P
+SBI/web-learning-hub/node_
+modules/rollup/dist/es/sha
+red/parseAst.js:402:42)
+    at Module.error (file:
+///E:/PSBI/web-learning-hu
+b/node_modules/rollup/dist
+/es/shared/node-entry.js:1
+7380:16)
+    at Module.traceVariabl
+e (file:///E:/PSBI/web-lea
+rning-hub/node_modules/rol
+lup/dist/es/shared/node-en
+try.js:17813:29)
+    at ModuleScope.findVar
+iable (file:///E:/PSBI/web
+-learning-hub/node_modules
+/rollup/dist/es/shared/nod
+e-entry.js:15403:39)
+    at FunctionScope.findV
+ariable (file:///E:/PSBI/w
+eb-learning-hub/node_modul
+es/rollup/dist/es/shared/n
+ode-entry.js:5676:38)
+    at FunctionBodyScope.f
+indVariable (file:///E:/PS
+BI/web-learning-hub/node_m
+odules/rollup/dist/es/shar
+ed/node-entry.js:5676:38)
+    at Identifier.bind (fi
+le:///E:/PSBI/web-learning
+-hub/node_modules/rollup/d
+ist/es/shared/node-entry.j
+s:5450:40)
+    at CallExpression.bind
+ (file:///E:/PSBI/web-lear
+ning-hub/node_modules/roll
+up/dist/es/shared/node-ent
+ry.js:2828:28)
+    at CallExpression.bind
+ (file:///E:/PSBI/web-lear
+ning-hub/node_modules/roll
+up/dist/es/shared/node-ent
+ry.js:12512:15)[39m

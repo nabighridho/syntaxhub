@@ -1,0 +1,100 @@
+﻿[36mvite v7.3.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32mÔ£ô[39m 5 modules transformed.
+npx : [31mÔ£ù[39m Bu
+ild failed in 951ms
+At line:1 char:1
++ npx vite build 2>&1 
+| Out-File -FilePath e
+:\PSBI\web-learning-hu
+b\bui ...
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo    
+          : NotSpecifi
+ed: (    [31mÔ£ù[39m
+ Build fa    iled in 9
+51ms:String)     [], R
+emoteException
+    + FullyQualifiedEr
+ror    Id : NativeComm
+andErr    or
+ 
+[31merror during buil
+d:
+[31m[vite:esbuild] Tr
+ansform failed with 1 
+error:
+E:/PSBI/web-learning-h
+ub/resources/js/Pages/
+Welcome.jsx:100:6: ERR
+OR: Expected "}" but f
+ound "className"[31m
+file: [36mE:/PSBI/web
+-learning-hub/resource
+s/js/Pages/Welcome.jsx
+:100:6[31m
+[33m
+[33mExpected "}" but 
+found "className"[33m
+98  |                 
+                 <pre 
+className="text-sm fon
+t-mono text-green-400"
+>
+99  |  <span className
+="text-white/30">1</sp
+an>  function connect(
+) {<br/>
+100 |  <span className
+="text-white/30">2</sp
+an>      return fetch(
+'/api/ssh', { method: 
+'POST' });<br/>
+    |        ^
+101 |  <span className
+="text-white/30">3</sp
+an>  }
+102 |                 
+                 </pre
+>
+[31m
+    at failureErrorWit
+hLog (E:\PSBI\web-lear
+ning-hub\node_modules\
+esbuild\lib\main.js:17
+48:15)
+    at E:\PSBI\web-lea
+rning-hub\node_modules
+\esbuild\lib\main.js:1
+017:50
+    at responseCallbac
+ks.<computed> (E:\PSBI
+\web-learning-hub\node
+_modules\esbuild\lib\m
+ain.js:884:9)
+    at handleIncomingP
+acket (E:\PSBI\web-lea
+rning-hub\node_modules
+\esbuild\lib\main.js:9
+39:12)
+    at Socket.readFrom
+Stdout (E:\PSBI\web-le
+arning-hub\node_module
+s\esbuild\lib\main.js:
+862:7)
+    at Socket.emit (no
+de:events:524:28)
+    at addChunk (node:
+internal/streams/reada
+ble:561:12)
+    at readableAddChun
+kPushByteMode (node:in
+ternal/streams/readabl
+e:512:3)
+    at Readable.push (
+node:internal/streams/
+readable:392:5)
+    at Pipe.onStreamRe
+ad (node:internal/stre
+am_base_commons:191:23
+)[39m

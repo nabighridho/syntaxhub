@@ -1,0 +1,22 @@
+﻿
+  Dropping all tables  11.04ms DONE
+
+   INFO  Preparing database.  
+
+  Creating migration table  10.49ms DONE
+
+   INFO  Running migrations.  
+
+  0001_01_01_000000_create_users_table  33.21ms DONE
+  0001_01_01_000001_create_cache_table  20.89ms DONE
+  0001_01_01_000002_create_jobs_table  27.51ms DONE
+  2026_04_11_062944_create_tutorials_table  5.21ms DONE
+  2026_04_11_062945_create_snippets_table  6.22ms DONE
+  2026_04_11_062945_create_user_progress_table  20.98ms DONE
+  2026_04_11_062946_create_badges_table  5.60ms DONE
+  2026_04_11_062946_create_bookmarks_table  10.89ms DONE
+  2026_04_11_062947_create_user_badges_table  11.07ms DONE
+
+
+   INFO  Seeding database.  
+

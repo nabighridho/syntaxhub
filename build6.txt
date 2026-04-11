@@ -1,0 +1,83 @@
+﻿[36mvite v7.3.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32mÔ£ô[39m 7 modules transformed.
+npx : [31mÔ£ù[39m Build 
+failed in 612ms
+At line:1 char:1
++ npx vite build 2>&1 | Ou
+t-File -FilePath e:\PSBI\w
+eb-learning-hub\bui ...
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (  
+  [31mÔ£ù[39m Build fa   
+ iled in 612ms:String)    
+ [], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+[31merror during build:
+[31m[vite:esbuild] Transf
+orm failed with 1 error:
+E:/PSBI/web-learning-hub/r
+esources/js/Pages/Tutorial
+s/Show.jsx:74:37: ERROR: S
+yntax error "`"[31m
+file: [36mE:/PSBI/web-lea
+rning-hub/resources/js/Pag
+es/Tutorials/Show.jsx:74:3
+7[31m
+[33m
+[33mSyntax error "`"[33m
+72 |                      
+    'border-white/40 text-
+white focus:border-white f
+ocus:bg-white/20'
+73 |                      
+}`}
+74 |                      
+style={{ width: \`\${size}
+ch\` }}
+   |                      
+                 ^
+75 |                      
+disabled={status === 'succ
+ess' || status === 'checki
+ng'}
+76 |                      
+autoComplete="off"
+[31m
+    at failureErrorWithLog
+ (E:\PSBI\web-learning-hub
+\node_modules\esbuild\lib\
+main.js:1748:15)
+    at E:\PSBI\web-learnin
+g-hub\node_modules\esbuild
+\lib\main.js:1017:50
+    at responseCallbacks.<
+computed> (E:\PSBI\web-lea
+rning-hub\node_modules\esb
+uild\lib\main.js:884:9)
+    at handleIncomingPacke
+t (E:\PSBI\web-learning-hu
+b\node_modules\esbuild\lib
+\main.js:939:12)
+    at Socket.readFromStdo
+ut (E:\PSBI\web-learning-h
+ub\node_modules\esbuild\li
+b\main.js:862:7)
+    at Socket.emit (node:e
+vents:524:28)
+    at addChunk (node:inte
+rnal/streams/readable:561:
+12)
+    at readableAddChunkPus
+hByteMode (node:internal/s
+treams/readable:512:3)
+    at Readable.push (node
+:internal/streams/readable
+:392:5)
+    at Pipe.onStreamRead (
+node:internal/stream_base_
+commons:191:23)[39m

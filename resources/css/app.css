@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   GLOBAL DARK VARIABLES & RESET
+   ============================================ */
+:root {
+    --bg-dark: #0a0a0b;
+    --card-dark: #121214;
+    --card-border: rgba(255, 255, 255, 0.06);
+    --card-glow: rgba(255, 255, 255, 0.03);
+    --accent: #ffffff;
+    --accent-subtle: rgba(255, 255, 255, 0.6);
+}
+
+@layer base {
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-dark);
+        color: #e4e4e7;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+    }
+}
+
+/* ============================================
+   NOISE TEXTURE (Landing.love aesthetic)
+   ============================================ */
+.noise-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* ============================================
+   PRELOADER (Ultra-modern kinetic)
+   ============================================ */
+#app-preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.loader-bg {
+    position: absolute;
+    width: 100%;
+    height: 50vh;
+    background-color: #000000;
+    transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+    z-index: 1;
+}
+
+.loader-bg.top {
+    top: 0;
+    transform-origin: top;
+}
+
+.loader-bg.bottom {
+    bottom: 0;
+    transform-origin: bottom;
+}
+
+#app-preloader.preloader-exit .loader-bg.top { transform: scaleY(0); }
+#app-preloader.preloader-exit .loader-bg.bottom { transform: scaleY(0); }
+#app-preloader.preloader-exit .loader-content { opacity: 0; transform: translateY(-30px); }
+
+.loader-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.percentage {
+    font-size: 8rem;
+    font-weight: 800;
+    letter-spacing: -3px;
+    color: white;
+    line-height: 1;
+    mix-blend-mode: difference;
+}
+
+.loader-tagline {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+    position: relative;
+}
+
+.reveal-text {
+    display: inline-block;
+    transform: translateY(100%);
+    animation: revealUp 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.loader-tagline span:nth-child(1) .reveal-text { animation-delay: 0.1s; }
+.loader-tagline span:nth-child(2) .reveal-text { animation-delay: 0.2s; }
+.loader-tagline span:nth-child(3) .reveal-text { animation-delay: 0.3s; }
+
+@keyframes revealUp {
+    to { transform: translateY(0); }
+}
+
+.loader-progress-container {
+    margin-top: 30px;
+    width: 200px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.loader-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: white;
+    transition: width 0.1s linear;
+}
+
+/* ============================================
+   BENTO UI & GLASSMORPHISM MODERN
+   ============================================ */
+@layer components {
+    .bento-card {
+        @apply relative overflow-hidden rounded-[24px] bg-[#121214] border border-white/5 
+               transition-all duration-500 ease-out;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .bento-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                                  rgba(255,255,255,0.06), 
+                                  transparent 40%);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+    }
+    
+    .bento-card:hover {
+        @apply border-white/10;
+        transform: translateY(-2px);
+    }
+    
+    .bento-card:hover::before {
+        opacity: 1;
+    }
+
+    .glass-nav {
+        @apply bg-[#0a0a0b]/60 backdrop-blur-2xl border border-white/5;
+    }
+
+    .btn-brutal {
+        @apply px-6 py-3 rounded-full font-medium text-sm transition-all duration-300;
+        background: white;
+        color: black;
+    }
+    
+    .btn-brutal:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    .btn-outline {
+        @apply px-6 py-3 rounded-full font-medium text-sm transition-all duration-300
+               border border-white/20 text-white hover:bg-white/10;
+    }
+    
+    .tag-modern {
+        @apply px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-semibold
+               tracking-wide uppercase text-white/70;
+    }
+}
+
+/* ============================================
+   GLOW EFFECTS
+   ============================================ */
+.glow-text {
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+.gradient-text {
+    background: linear-gradient(to right, #ffffff, #a1a1aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.glow-orb {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR (Dark Mode)
+   ============================================ */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* ============================================
+   PROSE OVERRIDES (Dark Mode)
+   ============================================ */
+.tutorial-content h2 { @apply text-2xl font-bold text-white mt-8 mb-4 tracking-tight; }
+.tutorial-content h3 { @apply text-xl font-bold text-white/90 mt-6 mb-3 tracking-tight; }
+.tutorial-content p { @apply text-white/60 leading-relaxed mb-4 text-[15px]; }
+.tutorial-content ul { @apply list-disc pl-6 mb-4 space-y-2; }
+.tutorial-content li { @apply text-white/60 text-[15px]; }
+.tutorial-content strong { @apply text-white/90 font-semibold; }
+.tutorial-content pre {
+    @apply bg-[#09090b] border border-white/10 rounded-2xl p-5 overflow-x-auto my-6 shadow-2xl;
+}
+.tutorial-content code {
+    @apply text-sm font-mono bg-white/5 px-1.5 py-0.5 rounded text-white/80;
+}
+.tutorial-content pre code {
+    @apply bg-transparent p-0 text-white/90;
+}
+
+/* ============================================
+   CODEMIRROR OVERRIDES (Dark Mode)
+   ============================================ */
+.cm-editor {
+    font-size: 14px !important;
+    background: #09090b !important;
+    color: #e4e4e7 !important;
+}
+.cm-gutters {
+    background-color: #09090b !important;
+    border-right: 1px solid rgba(255,255,255,0.05) !important;
+    color: rgba(255,255,255,0.3) !important;
+}
+.cm-activeLine { background-color: rgba(255,255,255,0.03) !important; }
+.cm-activeLineGutter { background-color: rgba(255,255,255,0.05) !important; color: white !important; }
