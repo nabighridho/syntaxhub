@@ -9,7 +9,11 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Bookmark extends Model
 {
     protected $fillable = [
-        'user_id', 'bookmarkable_type', 'bookmarkable_id',
+        'user_id', 'bookmarkable_type', 'bookmarkable_id', 'meta'
+    ];
+
+    protected $casts = [
+        'meta' => 'array',
     ];
 
     public function user(): BelongsTo

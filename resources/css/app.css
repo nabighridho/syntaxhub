@@ -265,3 +265,34 @@
 }
 .cm-activeLine { background-color: rgba(255,255,255,0.03) !important; }
 .cm-activeLineGutter { background-color: rgba(255,255,255,0.05) !important; color: white !important; }
+
+/* ============================================
+   BOOK PAGE-TURN EFFECTS
+   ============================================ */
+.book-page-shadow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.06) 0%,
+        transparent 8%,
+        transparent 92%,
+        rgba(0, 0, 0, 0.04) 100%
+    );
+    z-index: 1;
+    border-radius: 24px;
+}
+
+/* Hide scrollbar for slide dots */
+.scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
+
+/* Bookmark fill override for react-icons */
+.fill-yellow-400 {
+    fill: #facc15;
+}

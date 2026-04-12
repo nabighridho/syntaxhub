@@ -21,6 +21,7 @@ class BookmarkController extends Controller
                     'id' => $bookmark->id,
                     'type' => class_basename($bookmark->bookmarkable_type),
                     'item' => $bookmark->bookmarkable,
+                    'meta' => $bookmark->meta,
                     'created_at' => $bookmark->created_at,
                 ];
             });
@@ -35,6 +36,7 @@ class BookmarkController extends Controller
         $request->validate([
             'bookmarkable_type' => 'required|in:tutorial,snippet',
             'bookmarkable_id' => 'required|integer',
+            'meta' => 'nullable|array',
         ]);
 
         $type = $request->bookmarkable_type === 'tutorial' ? Tutorial::class : Snippet::class;
@@ -44,7 +46,18 @@ class BookmarkController extends Controller
             ->where('bookmarkable_id', $request->bookmarkable_id)
             ->first();
 
+        // If it exists, and we are updating the slide index, simply update it instead of removing
         if ($existing) {
+            $newSlideIndex = $request->input('meta.slide_index');
+            $existingSlideIndex = $existing->meta['slide_index'] ?? null;
+
+            if ($request->has('meta') && $newSlideIndex !== null && $newSlideIndex !== $existingSlideIndex) {
+                // Update meta
+                $existing->update(['meta' => $request->meta]);
+                return back()->with('message', 'Bookmark location updated!');
+            }
+
+            // Otherwise, normal toggle removal
             $existing->delete();
             return back()->with('message', 'Bookmark removed!');
         }
@@ -53,6 +66,7 @@ class BookmarkController extends Controller
             'user_id' => $request->user()->id,
             'bookmarkable_type' => $type,
             'bookmarkable_id' => $request->bookmarkable_id,
+            'meta' => $request->meta,
         ]);
 
         return back()->with('message', 'Bookmark added!');

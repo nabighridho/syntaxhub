@@ -29,10 +29,23 @@ class TutorialController extends Controller
     public function show(Request $request, Tutorial $tutorial)
     {
         $progress = null;
+        $isBookmarked = false;
+        $bookmarkedSlide = null;
+
         if ($request->user()) {
             $progress = UserProgress::where('user_id', $request->user()->id)
                 ->where('tutorial_id', $tutorial->id)
                 ->first();
+
+            $bookmark = \App\Models\Bookmark::where('user_id', $request->user()->id)
+                ->where('bookmarkable_type', Tutorial::class)
+                ->where('bookmarkable_id', $tutorial->id)
+                ->first();
+
+            if ($bookmark) {
+                $isBookmarked = true;
+                $bookmarkedSlide = $bookmark->meta['slide_index'] ?? null;
+            }
         }
 
         $prevTutorial = Tutorial::where('order', '<', $tutorial->order)->orderByDesc('order')->first();
@@ -43,6 +56,8 @@ class TutorialController extends Controller
             'progress' => $progress,
             'prevTutorial' => $prevTutorial,
             'nextTutorial' => $nextTutorial,
+            'isBookmarked' => $isBookmarked,
+            'bookmarkedSlide' => $bookmarkedSlide,
         ]);
     }
 

@@ -39,8 +39,15 @@ export default function Bookmarks({ bookmarks }) {
                                     {bm.type === 'Tutorial' ? <HiOutlineBookOpen className="w-3.5 h-3.5" /> : <HiOutlineCode className="w-3.5 h-3.5" />}
                                     <span className="ml-1">{bm.type}</span>
                                 </span>
-                                <Link href={bm.type === 'Tutorial' ? `/tutorials/${bm.item.id}` : `/snippets/${bm.item.id}`} className="flex-1 min-w-0">
-                                    <p className="font-semibold text-white group-hover:text-sky-400 transition-colors truncate">{bm.item.title}</p>
+                                <Link href={bm.type === 'Tutorial' ? `/tutorials/${bm.item.id}${bm.meta?.slide_index !== undefined ? `?slide=${bm.meta.slide_index}` : ''}` : `/snippets/${bm.item.id}`} className="flex-1 min-w-0">
+                                    <p className="font-semibold text-white group-hover:text-sky-400 transition-colors truncate">
+                                        {bm.item.title}
+                                        {bm.type === 'Tutorial' && bm.meta?.slide_index !== undefined && (
+                                            <span className="ml-2 text-xs font-normal text-yellow-500/80 bg-yellow-500/10 px-1.5 py-0.5 rounded-md">
+                                                Slide {bm.meta.slide_index + 1}
+                                            </span>
+                                        )}
+                                    </p>
                                     <p className="text-sm text-white/50 truncate">{bm.item.description}</p>
                                 </Link>
                                 <button onClick={() => handleRemove(bm)}
