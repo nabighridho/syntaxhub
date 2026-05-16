@@ -1,7 +1,7 @@
 import AppLayout from '@/Layouts/AppLayout';
 import { Head } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { HiOutlinePlay, HiOutlineTrash, HiOutlineCode, HiOutlineEye, HiOutlineTerminal, HiOutlineArrowsExpand, HiOutlineArrowRight } from 'react-icons/hi';
 
 const defaultCode = {
@@ -66,18 +66,16 @@ export default function Playground() {
 
     const switchTab = (t) => { setTab(t); };
 
-    // Capture iframe consol logs
-    import('react').then(React => {
-        React.useEffect(() => {
-            const handleMessage = (e) => {
-                if (e.data && e.data.type === 'PLAYGROUND_LOG') {
-                    setLogs(prev => [...prev, { type: e.data.level, text: e.data.payload }]);
-                }
-            };
-            window.addEventListener('message', handleMessage);
-            return () => window.removeEventListener('message', handleMessage);
-        }, []);
-    });
+    // Capture iframe console logs
+    useEffect(() => {
+        const handleMessage = (e) => {
+            if (e.data && e.data.type === 'PLAYGROUND_LOG') {
+                setLogs(prev => [...prev, { type: e.data.level, text: e.data.payload }]);
+            }
+        };
+        window.addEventListener('message', handleMessage);
+        return () => window.removeEventListener('message', handleMessage);
+    }, []);
 
     const runCode = useCallback(() => {
         setRunning(true);
@@ -128,24 +126,23 @@ export default function Playground() {
         <AppLayout title="Playground">
             <Head title="Playground" />
 
-            <div className="flex flex-col lg:flex-row gap-4 h-[calc(100vh-200px)] min-h-[600px] w-full">
+            <div className="flex flex-col lg:flex-row gap-4 h-auto lg:h-[calc(100vh-200px)] lg:min-h-[500px] w-full">
                 {/* Editor Matrix */}
                 <AnimatePresence initial={false}>
                     {!isMaximized && (
                         <motion.div 
                             layout
-                            initial={{ opacity: 0, width: '0%', paddingLeft: 0, paddingRight: 0, flexBasis: '0%' }} 
-                            animate={{ opacity: 1, width: '50%', paddingLeft: undefined, paddingRight: undefined, flexBasis: '50%' }} 
-                            exit={{ opacity: 0, width: '0%', paddingLeft: 0, paddingRight: 0, flexBasis: '0%' }}
-                            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} 
-                            className="bento-card flex flex-col h-full rounded-[24px] overflow-hidden min-w-0"
-                            style={{ flexShrink: 0 }}
+                            initial={{ opacity: 0 }} 
+                            animate={{ opacity: 1 }} 
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} 
+                            className="bento-card flex flex-col h-[50vh] lg:h-full rounded-[24px] overflow-hidden min-w-0 w-full lg:w-1/2 shrink-0"
                         >
-                            <div className="flex items-center justify-between px-2 bg-white/5 border-b border-white/5 min-w-[300px]">
+                            <div className="flex items-center justify-between px-2 bg-white/5 border-b border-white/5">
                                 <div className="flex">
                                     {tabs.map(t => (
                                         <button key={t.key} onClick={() => switchTab(t.key)}
-                                            className={`px-5 py-3 text-[11px] uppercase tracking-widest font-bold transition-all border-b-2 ${
+                                            className={`px-4 sm:px-5 py-3 text-[11px] uppercase tracking-widest font-bold transition-all border-b-2 ${
                                                 tab === t.key ? 'border-white text-white' : 'border-transparent text-white/30 hover:text-white/60'
                                             }`}>
                                             {t.label}
@@ -162,15 +159,15 @@ export default function Playground() {
 
                             <textarea
                                 value={codes[tab]} onChange={e => setCodes({ ...codes, [tab]: e.target.value })} onKeyDown={handleKeyDown}
-                                className="flex-1 w-full min-w-[300px] bg-transparent text-white/70 font-mono text-[13px] p-6 border-none focus:ring-0 resize-none outline-none leading-relaxed"
+                                className="flex-1 w-full bg-transparent text-white/70 font-mono text-[13px] p-4 sm:p-6 border-none focus:ring-0 resize-none outline-none leading-relaxed"
                                 spellCheck={false} style={{ tabSize: 4 }}
                             />
 
-                            <div className="p-4 border-t border-white/5 bg-white/5 flex items-center justify-between min-w-[300px]">
-                                <button onClick={runCode} disabled={running} className="btn-brutal text-xs flex items-center gap-2 disabled:opacity-50 px-6 py-2">
-                                    <HiOutlinePlay className="w-4 h-4" /> {running ? 'EXECUTING...' : 'RUN COMPILE'}
+                            <div className="p-3 sm:p-4 border-t border-white/5 bg-white/5 flex items-center justify-between gap-2">
+                                <button onClick={runCode} disabled={running} className="btn-brutal text-xs flex items-center gap-2 disabled:opacity-50 px-4 sm:px-6 py-2 shrink-0">
+                                    <HiOutlinePlay className="w-4 h-4" /> {running ? 'EXECUTING...' : 'RUN'}
                                 </button>
-                                <span className="text-[10px] text-white/30 uppercase tracking-widest flex flex-wrap items-center gap-1">
+                                <span className="text-[10px] text-white/30 uppercase tracking-widest hidden sm:flex items-center gap-1">
                                     <span className="border border-white/20 rounded px-1 min-w-[20px] text-center">Ctrl</span> + <span className="border border-white/20 rounded px-1.5">Enter</span>
                                 </span>
                             </div>
@@ -182,32 +179,32 @@ export default function Playground() {
                 <motion.div 
                     layout
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} 
-                    className="bento-card flex flex-col h-full rounded-[24px] overflow-hidden flex-1 min-w-0"
+                    className="bento-card flex flex-col h-[50vh] lg:h-full rounded-[24px] overflow-hidden flex-1 min-w-0"
                 >
-                    <div className="flex items-center justify-between px-2 bg-white/5 border-b border-white/5 whitespace-nowrap overflow-x-auto no-scrollbar">
-                        <div className="flex">
+                    <div className="flex items-center justify-between px-2 bg-white/5 border-b border-white/5">
+                        <div className="flex shrink-0">
                             <button onClick={() => setView('preview')}
-                                className={`flex items-center gap-2 px-5 py-3 text-[11px] uppercase tracking-widest font-bold transition-all border-b-2 ${
+                                className={`flex items-center gap-1.5 px-3 sm:px-5 py-3 text-[11px] uppercase tracking-widest font-bold transition-all border-b-2 ${
                                     view === 'preview' ? 'border-white text-white' : 'border-transparent text-white/30 hover:text-white/60'
                                 }`}>
-                                <HiOutlineEye className="w-4 h-4" /> Visual Render
+                                <HiOutlineEye className="w-4 h-4" /> <span className="hidden sm:inline">Render</span>
                             </button>
                             <button onClick={() => setView('console')}
-                                className={`flex items-center gap-2 px-5 py-3 text-[11px] uppercase tracking-widest font-bold transition-all border-b-2 ${
+                                className={`flex items-center gap-1.5 px-3 sm:px-5 py-3 text-[11px] uppercase tracking-widest font-bold transition-all border-b-2 ${
                                     view === 'console' ? 'border-white text-white' : 'border-transparent text-white/30 hover:text-white/60'
                                 }`}>
-                                <HiOutlineTerminal className="w-4 h-4" /> Terminal
+                                <HiOutlineTerminal className="w-4 h-4" /> <span className="hidden sm:inline">Terminal</span>
                                 <span className="ml-1 bg-white/10 px-1.5 rounded-full text-[9px]">{logs.length}</span>
                             </button>
                         </div>
                         <div className="flex items-center pr-2 shrink-0">
                             <button onClick={() => setIsMaximized(!isMaximized)}
-                                className="p-2 text-white/30 hover:text-white transition-colors flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold" 
+                                className="p-2 text-white/30 hover:text-white transition-colors flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-bold" 
                                 title={isMaximized ? "Restore Layout" : "Maximize Output"}>
                                 {isMaximized ? (
-                                    <><HiOutlineArrowRight className="w-4 h-4" /> SHOW EDITOR</>
+                                    <><HiOutlineArrowRight className="w-4 h-4" /> <span className="hidden sm:inline">EDITOR</span></>
                                 ) : (
-                                    <><HiOutlineArrowsExpand className="w-4 h-4" /> MAXIMIZE MENU</>
+                                    <><HiOutlineArrowsExpand className="w-4 h-4" /> <span className="hidden sm:inline">MAX</span></>
                                 )}
                             </button>
                         </div>
@@ -215,15 +212,15 @@ export default function Playground() {
 
                     <div className="flex-1 bg-[#050505] relative">
                         {view === 'console' ? (
-                            <div className="p-6 font-mono text-[13px] h-full overflow-auto text-white/70">
+                            <div className="p-4 sm:p-6 font-mono text-[12px] sm:text-[13px] h-full overflow-auto text-white/70">
                                 {logs.length === 0 ? (
                                     <div className="h-full flex flex-col items-center justify-center opacity-30">
                                         <HiOutlineTerminal className="w-12 h-12 mb-4" />
                                         <p className="tracking-widest uppercase text-[10px]">Awaiting Instructions</p>
                                     </div>
                                 ) : logs.map((l, i) => (
-                                    <div key={i} className={`py-1 ${l.type === 'error' ? 'text-red-400' : l.type === 'warn' ? 'text-yellow-400' : 'text-white'}`}>
-                                        <span className="text-white/30 mr-3">❯</span>{l.text}
+                                    <div key={i} className={`py-1 break-all ${l.type === 'error' ? 'text-red-400' : l.type === 'warn' ? 'text-yellow-400' : 'text-white'}`}>
+                                        <span className="text-white/30 mr-2 sm:mr-3">❯</span>{l.text}
                                     </div>
                                 ))}
                             </div>
