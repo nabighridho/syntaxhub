@@ -33,9 +33,11 @@ class TutorialController extends Controller
         $bookmarkedSlide = null;
 
         if ($request->user()) {
-            $progress = UserProgress::where('user_id', $request->user()->id)
-                ->where('tutorial_id', $tutorial->id)
-                ->first();
+            // Auto-create 'in_progress' record when user opens a tutorial
+            $progress = UserProgress::firstOrCreate(
+                ['user_id' => $request->user()->id, 'tutorial_id' => $tutorial->id],
+                ['status' => 'in_progress']
+            );
 
             $bookmark = \App\Models\Bookmark::where('user_id', $request->user()->id)
                 ->where('bookmarkable_type', Tutorial::class)

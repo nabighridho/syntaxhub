@@ -38,6 +38,7 @@ class ProgressController extends Controller
             'stats' => [
                 'completed' => $progress->where('status', 'completed')->count(),
                 'inProgress' => $progress->where('status', 'in_progress')->count(),
+                'total' => \App\Models\Tutorial::count(),
                 'totalTime' => $progress->where('status', 'completed')
                     ->sum(fn($p) => $p->tutorial->estimated_minutes ?? 0),
             ],

@@ -6,7 +6,7 @@ import {
     HiOutlineTerminal, HiOutlineBookmark, HiOutlineChevronLeft,
     HiOutlineChevronRight,
 } from 'react-icons/hi';
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 
 /* ================================================================
    INTERACTIVE QUIZ COMPONENT (supports multi-quiz per tutorial)
@@ -266,8 +266,7 @@ export default function TutorialShow({ tutorial, progress, prevTutorial, nextTut
     };
 
     /* ----- Keyboard navigation ----- */
-    // We handle left/right arrow keys for navigation
-    useState(() => {
+    useEffect(() => {
         const handler = (e) => {
             if (e.target.tagName === 'INPUT') return; // Don't navigate when typing in quiz
             if (e.key === 'ArrowRight') goNext();
@@ -275,7 +274,7 @@ export default function TutorialShow({ tutorial, progress, prevTutorial, nextTut
         };
         window.addEventListener('keydown', handler);
         return () => window.removeEventListener('keydown', handler);
-    });
+    }, [goNext, goPrev]);
 
     /* ----- Count content vs quiz slides ----- */
     const contentSlideCount = slides.filter(s => s.type === 'content').length;

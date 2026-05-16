@@ -13,10 +13,11 @@ const fadeUp = {
 const PIE_COLORS = ['#ffffff', '#ffffff40', '#ffffff10'];
 
 export default function Progress({ progress, badges, weeklyData, stats }) {
+    const total = stats.total || 1;
     const pieData = [
         { name: 'Selesai', value: Math.max(1, stats.completed) },
         { name: 'Berjalan', value: Math.max(0, stats.inProgress) },
-        { name: 'Belum', value: Math.max(0, 6 - stats.completed - stats.inProgress) },
+        { name: 'Belum', value: Math.max(0, total - stats.completed - stats.inProgress) },
     ];
 
     return (
@@ -73,7 +74,7 @@ export default function Progress({ progress, badges, weeklyData, stats }) {
                             </PieChart>
                         </ResponsiveContainer>
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <span className="text-xl font-bold text-white">{Math.round((stats.completed/6)*100)}%</span>
+                            <span className="text-xl font-bold text-white">{Math.round((stats.completed/total)*100)}%</span>
                         </div>
                     </div>
                     <div className="flex justify-center gap-4 mt-4">
@@ -99,7 +100,7 @@ export default function Progress({ progress, badges, weeklyData, stats }) {
                                     <p className="text-[10px] text-white/40 uppercase tracking-widest mt-0.5">{p.tutorial?.level}</p>
                                 </div>
                                 <span className="text-[10px] text-white/30 uppercase tracking-widest">
-                                    {p.status === 'completed' ? 'Done' : 'Active'}
+                                    {p.status === 'completed' ? 'Done' : p.status === 'in_progress' ? 'Active' : 'Not Started'}
                                 </span>
                             </div>
                         ))}
