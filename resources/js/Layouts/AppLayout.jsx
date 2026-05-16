@@ -185,7 +185,7 @@ export default function AppLayout({ children, title }) {
                             initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            className="absolute top-[80px] left-4 right-4 bg-[#121214]/95 backdrop-blur-3xl border border-white/10 rounded-[24px] overflow-hidden shadow-2xl md:hidden"
+                            className="absolute top-[80px] left-4 right-4 bg-[#121214]/95 backdrop-blur-3xl border border-white/10 rounded-[24px] overflow-hidden shadow-2xl md:hidden pointer-events-auto"
                         >
                             <div className="p-2 space-y-1">
                                 {mainNav.map((item) => {
